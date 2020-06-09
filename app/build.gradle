@@ -6,7 +6,7 @@ android {
         applicationId "limitless.materialcolor"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 5
+        versionCode 6
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
