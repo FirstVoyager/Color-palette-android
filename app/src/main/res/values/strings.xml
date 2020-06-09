@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Color palette</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="text_from_image">From Image</string>
+    <string name="new_color">New Color</string>
+    <string name="gradient_color">Gradient Color</string>
+    <string name="share">Share</string>
+    <string name="about">About</string>
+    <string name="text_show_color_name">Show Color Name</string>
+    <string name="text_camera">Camera</string>
+    <string name="text_gallery">Gallery</string>
+    <string name="url_app">https://play.google.com/store/apps/details?id=limitless.materialcolor</string>
+    <string name="text_top_color">Top Colors</string>
+    <string name="text_flat_ui_colors">Flat Ui Colors</string>
+    <string name="text_social">Social Colors</string>
+    <string name="text_metro">Metro Colors</string>
+    <string name="text_fluent">Fluent Colors</string>
+    <string name="about_app">Simple Application For Material Colors\nColor From Image\nCreate New Color\nGradient Colors\n30 Top Colors\nFlat UI Colors\nSocial Colors\nMetro Colors\nFluent Colors</string>
+    <string name="email">limitlessDreamDev@gmail.com</string>
+    <string name="url_source_code">https://github.com/FirstVoyager/Color-palette-android</string>
+    <string name="text_send">Send</string>
+    <string name="hex_code">HEX Code</string>
+    <string name="rgb_code">RGB Code</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="material">Material</string>
+    <string name="favorite">Favorite</string>
+
+    <string name="source_code">Source code</string>
+    <string name="communicate">Communicate</string>
+    <string name="alpha">Alpha</string>
+    <string name="gradient">Gradient</string>
+    <string name="newC">New</string>
+    <string name="add_to_favorite">Add to favorite</string>
+    <string name="delete_from_favorite">Delete from favorite</string>
+    <string name="copied">"copied"</string>
+
+    // ads
+    <string name="ad_id">ca-app-pub-5248248664217130~2667453100</string>
+    <string name="ad_banner">ca-app-pub-5248248664217130/4106858982</string>
+    <string name="ad_interstitial">ca-app-pub-5248248664217130/2651195130</string>
+
+    <string name="msg_color_palette">Color palette, is best color generator for android.\n source code on github.com is free.</string>
+    <string name="rate_us">Rate us</string>
+    <string name="favorite_color">Favorite color</string>
+    <string name="material_color">Material color</string>
+
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_material"
+        android:icon="@drawable/ic_material_design_24"
+        android:title="@string/material"/>
+
+    <item
+        android:id="@+id/nav_gradiend"
+        android:icon="@drawable/ic_gradient_black_24dp"
+        android:title="@string/gradient"/>
+
+    <item
+        android:id="@+id/nav_new"
+        android:icon="@drawable/ic_fiber_new_black_24dp"
+        android:title="@string/newC"/>
+
+    <item
+        android:id="@+id/nav_favorite"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/favorite"/>
+
+</menu>

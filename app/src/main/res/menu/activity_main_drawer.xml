@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group>
+        <item
+            android:id="@+id/nav_from_image"
+            android:title="@string/text_from_image"
+            android:icon="@drawable/ic_image_black_24dp"/>
+
+        <item
+            android:id="@+id/nav_top_color"
+            android:title="@string/text_top_color"
+            android:icon="@drawable/ic_medal_24"/>
+
+        <item
+            android:id="@+id/nav_flat_ui_colors"
+            android:title="@string/text_flat_ui_colors"
+            android:icon="@drawable/ic_drop_24"/>
+
+        <item
+            android:id="@+id/nav_social"
+            android:title="@string/text_social"
+            android:icon="@drawable/ic_facebook_24"/>
+
+        <item
+            android:id="@+id/nav_metro"
+            android:title="@string/text_metro"
+            android:icon="@drawable/ic_format_color_fill_black_24dp"/>
+
+        <item
+            android:id="@+id/nav_fluent"
+            android:title="@string/text_fluent"
+            android:icon="@drawable/ic_color_lens_black_24dp"/>
+
+    </group>
+
+</menu>

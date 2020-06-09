@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    app:cardCornerRadius="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.GradientFragment">
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:scrollbars="vertical"
+       android:id="@+id/recyclerView"
+       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+       tools:listitem="@layout/item_gradient"
+       android:layout_marginBottom="8dp"/>
+
+</androidx.cardview.widget.CardView>

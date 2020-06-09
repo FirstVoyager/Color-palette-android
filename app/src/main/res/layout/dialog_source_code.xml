@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imageButton_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:src="@drawable/ic_close_black_24dp"
+                android:layout_gravity="end"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/icon_main"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:text="@string/app_name"
+                android:layout_marginTop="16dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msg_color_palette"
+                android:layout_margin="16dp"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:gravity="center"
+                android:width="320dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView_sourceCode"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/source_code"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
