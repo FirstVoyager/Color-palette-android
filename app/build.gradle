@@ -24,11 +24,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     // local
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     // test
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
@@ -41,4 +45,6 @@ dependencies {
     implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
     // admob
     implementation 'com.google.android.gms:play-services-ads:19.1.0'
+    // colours
+    implementation 'com.github.matthewyork:ColoursLibrary:1.0.0@aar'
 }

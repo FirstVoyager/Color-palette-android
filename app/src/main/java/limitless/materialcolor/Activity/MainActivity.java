@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -22,7 +21,7 @@ import limitless.materialcolor.Dialog.SourceCodeDialog;
 import limitless.materialcolor.Fragment.FavoriteFragment;
 import limitless.materialcolor.Fragment.GradientFragment;
 import limitless.materialcolor.Fragment.MaterialFragment;
-import limitless.materialcolor.Fragment.NewFragment;
+import limitless.materialcolor.Fragment.SingleColorFragment;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity
     private DuoDrawerLayout drawer;
     private MaterialFragment materialFragment;
     private GradientFragment gradientFragment;
-    private NewFragment newFragment;
+    private SingleColorFragment singleColorFragment;
     private FavoriteFragment favoriteFragment;
     private int lastId = 0;
 
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity
     private void init() {
         materialFragment = new MaterialFragment();
         gradientFragment = new GradientFragment();
-        newFragment = new NewFragment();
+        singleColorFragment = new SingleColorFragment();
         favoriteFragment = new FavoriteFragment();
         drawer =  findViewById(R.id.drawer_layout);
         bnv = findViewById(R.id.bnv);
@@ -144,7 +143,7 @@ public class MainActivity extends AppCompatActivity
                 setTitle(R.string.gradient_color);
                 break;
             case R.id.nav_new:
-                setFragment(newFragment, id);
+                setFragment(singleColorFragment, id);
                 lastId = id;
                 setTitle(R.string.new_color);
                 break;
@@ -175,7 +174,7 @@ public class MainActivity extends AppCompatActivity
                 ft.hide(gradientFragment);
                 break;
             case R.id.nav_new:
-                ft.hide(newFragment);
+                ft.hide(singleColorFragment);
                 break;
             case R.id.nav_favorite:
                 ft.hide(favoriteFragment);

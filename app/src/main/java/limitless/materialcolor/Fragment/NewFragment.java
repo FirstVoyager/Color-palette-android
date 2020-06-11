@@ -1,142 +1,66 @@
 package limitless.materialcolor.Fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.AppCompatSeekBar;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
 
-import limitless.materialcolor.Other.SQLiteFavorite;
-import limitless.materialcolor.Other.SharePref;
-import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
 
-public class NewFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link NewFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class NewFragment extends Fragment {
 
-    private AppCompatSeekBar sbRed, sbGreen, sbBlue, sbAlpha;
-    private AppCompatTextView tvRGB, tvHEX;
-    private View vColor;
-    private AppCompatImageButton btnFavorite;
-    private SQLiteFavorite sqLiteFavorite;
-    private String currentColorHex = null, currentColorRGBA;
-    private SharePref sharePref;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public NewFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment NewFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static NewFragment newInstance(String param1, String param2) {
+        NewFragment fragment = new NewFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new, container, false);
-        init(view);
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_new2, container, false);
     }
-
-    private void init(View v) {
-        vColor = v.findViewById(R.id.view_color);
-        tvRGB = v.findViewById(R.id.textView_rgb);
-        tvHEX = v.findViewById(R.id.textView_hex);
-        sbRed = v.findViewById(R.id.seekBar_red);
-        sbGreen = v.findViewById(R.id.seekBar_green);
-        sbBlue = v.findViewById(R.id.seekBar_blue);
-        sbAlpha = v.findViewById(R.id.seekBar_alpha);
-        btnFavorite = v.findViewById(R.id.imageButton_favorite);
-        sqLiteFavorite = new SQLiteFavorite(getContext());
-        sharePref = new SharePref(getContext());
-
-        sbRed.setOnSeekBarChangeListener(this);
-        sbGreen.setOnSeekBarChangeListener(this);
-        sbBlue.setOnSeekBarChangeListener(this);
-        sbAlpha.setOnSeekBarChangeListener(this);
-        sbRed.setProgress(sharePref.get(SharePref.ColorRed, 0));
-        sbGreen.setProgress(sharePref.get(SharePref.ColorGreen, 100));
-        sbBlue.setProgress(sharePref.get(SharePref.ColorBlue, 255));
-        sbAlpha.setProgress(sharePref.get(SharePref.ColorAlpha, 255));
-        tvRGB.setOnClickListener(this);
-        tvHEX.setOnClickListener(this);
-        btnFavorite.setOnClickListener(this);
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        setData();
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    private void setData() {
-        int red = sbRed.getProgress();
-        int green = sbGreen.getProgress();
-        int blue = sbBlue.getProgress();
-        int alpha = sbAlpha.getProgress();
-        currentColorRGBA = "RGB (" + red + ", " + green + ", " + blue + ", " + alpha + ")";
-        currentColorHex = Utils.toHexCode(red, green, blue, alpha);
-
-        sharePref.put(SharePref.ColorRed, red);
-        sharePref.put(SharePref.ColorGreen, green);
-        sharePref.put(SharePref.ColorBlue, blue);
-        sharePref.put(SharePref.ColorAlpha, alpha);
-        tvRGB.setText(currentColorRGBA);
-        tvHEX.setText("HEX " + currentColorHex.toUpperCase());
-        vColor.setBackgroundColor(Color.parseColor(currentColorHex));
-        if (sqLiteFavorite.existColor(currentColorHex)){
-            btnFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
-        }else {
-            btnFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.textView_rgb:
-                copyRGB();
-                break;
-            case R.id.textView_hex:
-                copyHEX();
-                break;
-            case R.id.imageButton_favorite:
-                addToFavorite();
-                break;
-        }
-    }
-
-    private void addToFavorite() {
-        if (currentColorHex == null)
-            return;
-        if (sqLiteFavorite.existColor(currentColorHex)){
-            sqLiteFavorite.deleteColor(currentColorHex);
-            btnFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-            Utils.customToast(getContext(), R.string.delete_from_favorite);
-            Utils.sendDeleteFavBroadCast(getContext(), currentColorHex);
-        }else {
-            sqLiteFavorite.putColor(currentColorHex);
-            btnFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
-            Utils.customToast(getContext(), R.string.add_to_favorite);
-            Utils.sendAddFavBroadCast(getContext(), currentColorHex);
-        }
-    }
-
-    private void copyHEX() {
-        Utils.copyToClipboard(getContext(), currentColorHex);
-        Utils.customToast(getContext(), currentColorHex + " " + getString(R.string.copied));
-    }
-
-    private void copyRGB() {
-        Utils.copyToClipboard(getContext(), currentColorRGBA);
-        Utils.customToast(getContext(), currentColorRGBA + " " + getString(R.string.copied));
-    }
-
 }
