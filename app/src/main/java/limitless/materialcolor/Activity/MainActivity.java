@@ -21,7 +21,7 @@ import limitless.materialcolor.Dialog.SourceCodeDialog;
 import limitless.materialcolor.Fragment.FavoriteFragment;
 import limitless.materialcolor.Fragment.GradientFragment;
 import limitless.materialcolor.Fragment.MaterialFragment;
-import limitless.materialcolor.Fragment.SingleColorFragment;
+import limitless.materialcolor.Fragment.NewFragment;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
     private DuoDrawerLayout drawer;
     private MaterialFragment materialFragment;
     private GradientFragment gradientFragment;
-    private SingleColorFragment singleColorFragment;
+    private NewFragment newFragment;
     private FavoriteFragment favoriteFragment;
     private int lastId = 0;
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
     private void init() {
         materialFragment = new MaterialFragment();
         gradientFragment = new GradientFragment();
-        singleColorFragment = new SingleColorFragment();
+        newFragment = new NewFragment();
         favoriteFragment = new FavoriteFragment();
         drawer =  findViewById(R.id.drawer_layout);
         bnv = findViewById(R.id.bnv);
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity
                 setTitle(R.string.gradient_color);
                 break;
             case R.id.nav_new:
-                setFragment(singleColorFragment, id);
+                setFragment(newFragment, id);
                 lastId = id;
                 setTitle(R.string.new_color);
                 break;
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity
                 ft.hide(gradientFragment);
                 break;
             case R.id.nav_new:
-                ft.hide(singleColorFragment);
+                ft.hide(newFragment);
                 break;
             case R.id.nav_favorite:
                 ft.hide(favoriteFragment);

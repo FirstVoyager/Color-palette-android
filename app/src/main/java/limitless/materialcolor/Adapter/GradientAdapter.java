@@ -79,7 +79,7 @@ public class GradientAdapter extends RecyclerView.Adapter<GradientAdapter.Gradie
             tvSC.setText(mg.getsCode().toUpperCase());
             tvEC.setText(mg.geteCode().toUpperCase());
             tvName.setText(mg.getName());
-            vColor.setImageDrawable(Utils.getGradientDrawble(mg.getsCode(), mg.geteCode()));
+            vColor.setImageDrawable(Utils.gradientDrawable(mg.getsCode(), mg.geteCode()));
         }
 
         @Override
@@ -87,11 +87,11 @@ public class GradientAdapter extends RecyclerView.Adapter<GradientAdapter.Gradie
             switch (v.getId()){
                 case R.id.textView_startColor:
                     Utils.copyToClipboard(context, gradientList.get(getAdapterPosition()).getsCode());
-                    Utils.customToast(context, gradientList.get(getAdapterPosition()).getsCode() + " Copied");
+                    Utils.toast(context, gradientList.get(getAdapterPosition()).getsCode() + " Copied");
                     break;
                 case R.id.textView_endColor:
                     Utils.copyToClipboard(context, gradientList.get(getAdapterPosition()).geteCode());
-                    Utils.customToast(context, gradientList.get(getAdapterPosition()).geteCode() + " Copied");
+                    Utils.toast(context, gradientList.get(getAdapterPosition()).geteCode() + " Copied");
                     break;
             }
         }

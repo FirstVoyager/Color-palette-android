@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import androidx.annotation.IntegerRes;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 
@@ -35,8 +36,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import limitless.materialcolor.BuildConfig;
+import limitless.materialcolor.Dialog.SelectColorBottomSheet;
 import limitless.materialcolor.Fragment.FavoriteFragment;
 import limitless.materialcolor.Model.Color;
 import limitless.materialcolor.Model.Gradient;
@@ -110,8 +114,8 @@ public class Utils {
      * @param context
      * @param id id for string resouces
      */
-    public static void customToast(Context context, @StringRes int id){
-        customToast(context, context.getString(id));
+    public static void toast(Context context, @StringRes int id){
+        toast(context, context.getString(id));
     }
 
     /**
@@ -119,7 +123,7 @@ public class Utils {
      * @param context
      * @param s message for show
      */
-    public static void customToast(Context context, String s) {
+    public static void toast(Context context, String s) {
         if (context == null || s == null || s.isEmpty())
             return;
         if (toast != null)
@@ -140,11 +144,20 @@ public class Utils {
         return String.format("%06X", (0xFFFFFF & color));
     }
 
-    public static String toHexCode(@IntegerRes int red, @IntegerRes int green, @IntegerRes int blue, int alpha) {
+    public static String toHexCode(int red, int green, int blue, int alpha) {
         float[] hsv = new float[3];
         android.graphics.Color.RGBToHSV(red, green, blue, hsv);
         int color = android.graphics.Color.HSVToColor(alpha, hsv);
-        return String.format("#%08X", color);
+        return String.format("#%08X", color).toUpperCase();
+    }
+
+    public static String toHexCode(Integer[] colors){
+        if (colors == null || colors.length < 3)
+            return null;
+        if (colors.length == 4)
+            return toHexCode(colors[0], colors[1], colors[2], colors[3]);
+        else
+            return toHexCode(colors[0], colors[1], colors[2]);
     }
 
     public static List<Gradient> getGradientColors(JSONArray array){
@@ -158,22 +171,22 @@ public class Utils {
                         new Gradient(jo.getString("name"), ja.getString(0), ja.getString(ja.length() - 1))
                 );
             } catch (JSONException e) {
-                e.printStackTrace();
+                error(e);
             }
         }
         return gradients;
     }
 
-    public static Drawable getGradientDrawble(String s, String e) {
+    public static Drawable gradientDrawable(String start, String end) {
         GradientDrawable gd = null;
         try {
             gd = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
                     new int[]{
-                            android.graphics.Color.parseColor(s),
-                            android.graphics.Color.parseColor(e)});
+                            android.graphics.Color.parseColor(start),
+                            android.graphics.Color.parseColor(end)});
             gd.setShape(GradientDrawable.RECTANGLE);
-        } catch (Exception e1) {
-            e1.printStackTrace();
+        } catch (Exception e) {
+            error(e);
         }
         return gd;
     }
@@ -255,7 +268,7 @@ public class Utils {
         startActivity(context, new Intent(context, aClass));
     }
 
-    public static void startActivity(Context context, Intent intent){
+    public static void startActivity(@Nullable Context context, @Nullable Intent intent){
         if (context == null || intent == null)
             return;
         try {
@@ -317,4 +330,13 @@ public class Utils {
     }
 
 
+    public static void showDialog(DialogFragment dialogFragment, FragmentManager fm) {
+        if (dialogFragment == null || fm == null)
+            return;
+        try {
+            dialogFragment.show(fm, null);
+        } catch (Exception e) {
+            error(e);
+        }
+    }
 }

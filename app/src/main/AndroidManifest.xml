@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="limitless.materialcolor">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".ApplicationLoader"
@@ -16,8 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:label="@string/text_fluent"
-            android:name=".Activity.FluentColorsActivity"/>
+            android:theme="@style/AppTheme.FullScreen"
+            android:label="@string/gradient_color"
+            android:name=".Activity.GradientColorActivity" />
+        <activity
+            android:theme="@style/AppTheme.FullScreen"
+            android:name=".Activity.SingleColorActivity"
+            android:label="@string/single_color" />
+        <activity
+            android:name=".Activity.FluentColorsActivity"
+            android:label="@string/text_fluent" />
         <activity
             android:name=".Activity.MetroColorsActivity"
             android:label="@string/text_metro" />
@@ -43,9 +51,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/ad_id"/>
+            android:value="@string/ad_id" />
     </application>
 
 </manifest>

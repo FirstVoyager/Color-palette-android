@@ -3,4 +3,6 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="size_item_color_name">60dp</dimen>
     <dimen name="gradient_height">200dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="seekbar_title_width">50dp</dimen>
 </resources>

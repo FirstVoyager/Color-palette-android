@@ -117,19 +117,19 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHol
                 if (sqLiteFavorite.existColor(code)){
                     sqLiteFavorite.deleteColor(code);
                     btnFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                    Utils.customToast(context, context.getString(R.string.delete_from_favorite));
+                    Utils.toast(context, context.getString(R.string.delete_from_favorite));
                     if (isFavorite)
                         deleteItem(getAdapterPosition());
                     Utils.sendDeleteFavBroadCast(context, code);
                 }else {
                     sqLiteFavorite.putColor(code);
                     btnFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    Utils.customToast(context, context.getString(R.string.add_to_favorite));
+                    Utils.toast(context, context.getString(R.string.add_to_favorite));
                     Utils.sendAddFavBroadCast(context, code);
                 }
             }else if (v.getId() == R.id.cardView_color){
                 Utils.copyToClipboard(context, code);
-                Utils.customToast(context, code.toUpperCase() + " Copied");
+                Utils.toast(context, code.toUpperCase() + " Copied");
             }
         }
     }

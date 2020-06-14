@@ -8,7 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import androidx.palette.graphics.Palette;
 import androidx.appcompat.widget.AppCompatButton;
@@ -16,13 +16,12 @@ import androidx.appcompat.widget.AppCompatImageView;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.mattyork.colours.Colour;
 
 import limitless.materialcolor.Other.Constant;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
 
-public class ColorImageActivity extends AppCompatActivity implements View.OnClickListener {
+public class ColorImageActivity extends BaseActivity implements View.OnClickListener {
 
     private AppCompatImageView ivMain;
     private AppCompatButton btn1, btn2, btn3, btn4, btn5, btn6, btn7;
@@ -101,7 +100,7 @@ public class ColorImageActivity extends AppCompatActivity implements View.OnClic
 
     private void copyCode(int s) {
         Utils.copyToClipboard(this, String.valueOf(s));
-        Utils.customToast(this, String.valueOf(s) + " Copied");
+        Utils.toast(this, String.valueOf(s) + " Copied");
     }
 
     private void getGallery() {
