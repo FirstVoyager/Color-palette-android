@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/menu"
     android:background="@color/colorPrimaryDark"
     android:gravity="center_vertical"
     android:tag="@string/tag_menu"

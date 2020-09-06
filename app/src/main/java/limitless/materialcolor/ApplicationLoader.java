@@ -6,7 +6,10 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import androidx.viewbinding.BuildConfig;
 
 public class ApplicationLoader extends Application {
 
@@ -14,9 +17,8 @@ public class ApplicationLoader extends Application {
     public void onCreate() {
         super.onCreate();
         if (BuildConfig.DEBUG){
-            List<String> testDeviceIds = Arrays.asList("848A1F9D7BA440BD4EB8D4B832E01D61");
             RequestConfiguration configuration =
-                    new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
+                    new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("1959AA4068493046177228B46CB92270")).build();
             MobileAds.setRequestConfiguration(configuration);
         }
         MobileAds.initialize(getApplicationContext());

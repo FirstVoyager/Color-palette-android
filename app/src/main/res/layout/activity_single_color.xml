@@ -15,13 +15,13 @@
         android:background="#fafa"/>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_toolbar"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="12dp"
+        android:id="@+id/cardView_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        android:layout_margin="@dimen/card_title_margin"
+        app:cardCornerRadius="@dimen/card_medium_radius"
+        app:cardElevation="@dimen/card_title_radius">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,8 +45,7 @@
                 android:lines="1"
                 android:text="@string/single_color"
                 android:gravity="center_vertical"
-                style="@style/TextAppearance.AppCompat.Title"
-                android:layout_marginStart="8dp"/>
+                style="@style/TextAppearance.AppCompat.Title" />
 
             <ImageButton
                 android:contentDescription="@string/favorite"
@@ -55,6 +54,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_favorite_border_black_24dp"/>
+
+            <ImageButton
+                android:tint="@android:color/black"
+                android:contentDescription="@string/favorite"
+                android:id="@+id/imageButton_save"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_baseline_save_alt_24"/>
 
         </LinearLayout>
 
@@ -65,8 +73,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="12dp"
-        app:cardCornerRadius="8dp">
+        android:layout_margin="@dimen/card_title_margin"
+        app:cardCornerRadius="@dimen/card_medium_radius"
+        app:cardElevation="@dimen/card_title_radius">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -53,12 +53,9 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHol
 
     @Override
     public int getItemCount() {
-        try {
-            return colorList.size();
-        }catch (Exception e){
-            Utils.error(e);
+        if (colorList == null)
             return 0;
-        }
+        return colorList.size();
     }
 
     public void setData(List<Color> colorList) {

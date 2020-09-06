@@ -21,26 +21,26 @@ import limitless.materialcolor.Model.Gradient;
 import limitless.materialcolor.Other.ColorCode;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
+import limitless.materialcolor.databinding.FragmentGradientBinding;
 
 public class GradientFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private FragmentGradientBinding binding;
     private GradientAdapter gradientAdapter;
     private List<Gradient> gradientList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gradient, container, false);
-        init(view);
-        return view;
+        binding = FragmentGradientBinding.inflate(inflater, container, false);
+        init();
+        return binding.getRoot();
     }
 
-    private void init(View view) {
-        recyclerView = view.findViewById(R.id.recyclerView);
+    private void init() {
         gradientAdapter = new GradientAdapter(getContext(), null);
 
-        recyclerView.setAdapter(gradientAdapter);
+        binding.recyclerView.setAdapter(gradientAdapter);
         try {
             gradientList = Utils.getGradientColors(ColorCode.getGradientColor());
             setData(gradientList);
@@ -75,12 +75,9 @@ public class GradientFragment extends Fragment {
                 return false;
             }
         });
-        sv.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                setData(gradientList);
-                return false;
-            }
+        sv.setOnCloseListener(() -> {
+            setData(gradientList);
+            return false;
         });
 
     }

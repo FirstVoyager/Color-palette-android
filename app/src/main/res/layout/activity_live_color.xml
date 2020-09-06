@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.LiveColorActivity">
+
+    <ImageView
+        android:contentDescription="@string/main"
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fafa"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_toolbar"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_title_margin"
+        app:cardCornerRadius="@dimen/card_medium_radius"
+        app:cardElevation="@dimen/card_title_radius">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton_back"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:contentDescription="@string/back"
+                android:layout_width="wrap_content"
+                android:minWidth="65dp"
+                android:layout_height="match_parent"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView_title"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:text="@string/live_random_color" />
+
+            <ImageButton
+                android:visibility="gone"
+                android:contentDescription="@string/save"
+                android:id="@+id/imageButton_save"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_baseline_save_alt_24"
+                android:tint="@android:color/black"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/card_title_margin"
+        app:cardCornerRadius="@dimen/card_medium_radius"
+        app:cardElevation="@dimen/card_title_radius">
+
+        <LinearLayout
+            android:gravity="center"
+            android:padding="@dimen/padding_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textView_milliSecond"
+                android:textColor="@android:color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/speed_s"
+                style="@style/TextAppearance.AppCompat.Medium"/>
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                tools:progress="50"
+                android:max="1000"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

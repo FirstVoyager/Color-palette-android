@@ -20,38 +20,32 @@ import limitless.materialcolor.Model.Color;
 import limitless.materialcolor.Other.ColorCode;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
+import limitless.materialcolor.databinding.FragmentMaterialBinding;
 
 public class MaterialFragment extends Fragment {
 
-    private RecyclerView rvMainColor, rvColor;
+    private FragmentMaterialBinding binding;
     private ColorAdapter colorAdapter;
     private List<Color> colorList, nameList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_material, container, false);
-        init(view);
-        return view;
+        binding = FragmentMaterialBinding.inflate(inflater, container, false);
+        init();
+        return binding.getRoot();
     }
 
-    private void init(View view){
-        rvMainColor = view.findViewById(R.id.recyclerView_main);
-        rvColor = view.findViewById(R.id.recyclerView_color);
+    private void init(){
         colorList = Utils.toModelColor(ColorCode.colorRed);
         nameList = Utils.toModelColor(ColorCode.colorMain);
         colorAdapter = new ColorAdapter(getContext(), null);
 
-        rvColor.setAdapter(colorAdapter);
-        rvMainColor.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvColor.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false));
+        binding.recyclerViewColor.setAdapter(colorAdapter);
+        binding.recyclerViewMain.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerViewColor.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false));
 
-        rvMainColor.setAdapter(new MainAdapter(getContext(), nameList, new InterfaceSelectColor() {
-            @Override
-            public void selectColor(int i) {
-                setData(Utils.toModelColor(ColorCode.getC(i)));
-            }
-        }));
+        binding.recyclerViewMain.setAdapter(new MainAdapter(getContext(), nameList, i -> setData(Utils.toModelColor(ColorCode.getC(i)))));
         setData(colorList);
     }
 

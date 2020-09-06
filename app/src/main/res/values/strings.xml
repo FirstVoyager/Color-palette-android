@@ -38,15 +38,15 @@
     <string name="copied">"copied"</string>
 
     // ads
-    <string name="ad_id">###</string>
-    <string name="ad_banner">###</string>
-    <string name="ad_interstitial">###</string>
+    <string name="ad_id">ca-app-pub-5248248664217130~2667453100</string>
+    <string name="ad_banner">ca-app-pub-5248248664217130/4106858982</string>
+    <string name="ad_interstitial">ca-app-pub-5248248664217130/2651195130</string>
 
     <string name="msg_color_palette">Color palette, is best color generator for android.\n source code on github.com is free.</string>
     <string name="rate_us">Rate us</string>
     <string name="favorite_color">Favorite color</string>
     <string name="material_color">Material color</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="icon">Icon</string>
     <string name="create_new_single_color">Create new single color</string>
@@ -57,5 +57,10 @@
     <string name="angle">Angle</string>
     <string name="end_color">End color</string>
     <string name="back">Back</string>
+    <string name="live_random_color">Live random color</string>
+    <string name="error">Error</string>
+    <string name="save">Save</string>
+    <string name="speed">Speed</string>
+    <string name="speed_s">Speed (%d ms)</string>
 
 </resources>

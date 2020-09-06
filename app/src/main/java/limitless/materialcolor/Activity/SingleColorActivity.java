@@ -1,20 +1,34 @@
 package limitless.materialcolor.Activity;
 
+import androidx.annotation.NonNull;
 import limitless.materialcolor.Other.SQLiteFavorite;
 import limitless.materialcolor.Other.SharePref;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
 import limitless.materialcolor.databinding.ActivitySingleColorBinding;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.SeekBar;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 public class SingleColorActivity extends BaseActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
+
+    /**
+     * Code to check permission request result
+     */
+    private static final int storage_permission_code = 1001;
 
     private ActivitySingleColorBinding binding;
     private SQLiteFavorite sqLiteFavorite;
@@ -27,6 +41,14 @@ public class SingleColorActivity extends BaseActivity implements SeekBar.OnSeekB
         binding = ActivitySingleColorBinding.inflate(getLayoutInflater());
         init();
         setContentView(binding.getRoot());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == storage_permission_code && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            saveColor();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void init() {
@@ -48,6 +70,7 @@ public class SingleColorActivity extends BaseActivity implements SeekBar.OnSeekB
         binding.viewColor.setOnClickListener(this);
         binding.cardViewToolbar.setOnClickListener(null);
         binding.cardViewColors.setOnClickListener(null);
+        binding.imageButtonSave.setOnClickListener(this);
     }
 
     @Override
@@ -107,6 +130,25 @@ public class SingleColorActivity extends BaseActivity implements SeekBar.OnSeekB
             case R.id.imageButton_favorite:
                 addToFavorite();
                 break;
+            case R.id.imageButton_save:
+                saveColor();
+                break;
+        }
+    }
+
+    /**
+     * Save color as file
+     */
+    private void saveColor() {
+        if (Utils.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) { // save color
+            File file = Utils.bitmapToFile(this, Utils.colorToBitmap(Color.parseColor(currentColorHex)));
+            if (file != null && file.exists()) { // save and share image
+                Utils.sendPhoto(this, file);
+            } else {
+                Utils.toast(this, R.string.error);
+            }
+        }else { // request read and write permission
+            Utils.requestPermission(this, storage_permission_code, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
 

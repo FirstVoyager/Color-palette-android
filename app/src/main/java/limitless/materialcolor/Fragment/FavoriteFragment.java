@@ -21,37 +21,35 @@ import limitless.materialcolor.Model.Color;
 import limitless.materialcolor.Other.SQLiteFavorite;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
+import limitless.materialcolor.databinding.FragmentFavoriteBinding;
 
 public class FavoriteFragment extends Fragment {
 
     public static final String ACTION_ADD_FAVORITE = "ACTION_ADD_FAVORITE";
     public static final String ACTION_DELETE_FAVORITE = "ACTION_DELETE_FAVORITE";
 
+    private FragmentFavoriteBinding binding;
     private SQLiteFavorite favorite;
-    private RecyclerView recyclerView;
     private ColorAdapter colorAdapter;
-    private View vFavorite;
     private List<Color> colorList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-        init(view);
-        return view;
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false);
+        init();
+        return binding.getRoot();
     }
 
-    private void init(View view) {
+    private void init() {
         favorite = new SQLiteFavorite(getContext());
-        recyclerView = view.findViewById(R.id.recyclerView);
         colorAdapter = new ColorAdapter(getContext(), null, true);
-        vFavorite = view.findViewById(R.id.view_favorite);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
-        recyclerView.setAdapter(colorAdapter);
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+        binding.recyclerView.setAdapter(colorAdapter);
         colorList = favorite.getFavorites();
         if (colorList != null){
-            vFavorite.setVisibility(View.GONE);
+            binding.viewFavorite.setVisibility(View.GONE);
             colorAdapter.setData(colorList);
         }
         IntentFilter filter = new IntentFilter();
@@ -79,7 +77,7 @@ public class FavoriteFragment extends Fragment {
             if (intent.getAction().equals(ACTION_DELETE_FAVORITE)){
                 colorAdapter.deleteItem(intent.getStringExtra(Intent.EXTRA_TEXT));
                 if (colorAdapter.getItemCount() <= 0)
-                    vFavorite.setVisibility(View.VISIBLE);
+                    binding.viewFavorite.setVisibility(View.VISIBLE);
             }
         }
     };
@@ -88,8 +86,8 @@ public class FavoriteFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_ADD_FAVORITE)){
                 colorAdapter.putItem(intent.getStringExtra(Intent.EXTRA_TEXT));
-                if (vFavorite.getVisibility() == View.VISIBLE)
-                    vFavorite.setVisibility(View.GONE);
+                if (binding.viewFavorite.getVisibility() == View.VISIBLE)
+                    binding.viewFavorite.setVisibility(View.GONE);
             }
         }
     };

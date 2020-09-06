@@ -9,6 +9,7 @@ import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
 import limitless.materialcolor.databinding.ActivityGradientColorBinding;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -20,7 +21,14 @@ import android.view.animation.Animation;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
+import java.io.File;
+
 public class GradientColorActivity extends BaseActivity implements View.OnClickListener {
+
+    /**
+     * Code to check permission request result
+     */
+    private static final int storage_permission_code = 1002;
 
     private ActivityGradientColorBinding binding;
     private Integer[] colorStart = new Integer[]{255, 0, 0, 255};
@@ -33,7 +41,9 @@ public class GradientColorActivity extends BaseActivity implements View.OnClickL
         setContentView(binding.getRoot());
         init();
     }
+
     private void init() {
+        binding.imageButtonSave.setOnClickListener(this);
         binding.textViewRgbStart.setOnClickListener(this);
         binding.textViewRgbEnd.setOnClickListener(this);
         binding.textViewHexStart.setOnClickListener(this);
@@ -86,11 +96,30 @@ public class GradientColorActivity extends BaseActivity implements View.OnClickL
                 Utils.copyToClipboard(this, Utils.toHexCode(colorEnd));
                 Utils.toast(this, Utils.toHexCode(colorEnd) + " " + getString(R.string.copied));
                 break;
-//            case R.id.imageButton_view:
-//                Intent intent = new Intent(this, FullColorViewActivity.class);
-//                intent.putExtra(FullColorViewActivity.COLOR_CODE, isStartColor ? startHex : endHex);
-//                Utils.startActivity(this, intent);
-//                break;
+            case R.id.imageButton_save:
+                saveColor();
+                break;
+        }
+    }
+
+    /**
+     * Save as file and share color
+     */
+    private void saveColor() { // TODO: 9/6/20 fix in next version
+        if (Utils.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) { // save color
+            File file = Utils.bitmapToFile(
+                    this,
+                    Utils.drawableToBitmap(
+                            Utils.gradientDrawable(
+                                    Utils.toHexCode(colorStart),
+                                    Utils.toHexCode(colorEnd))));
+            if (file != null && file.exists()) { // save and share image
+                Utils.sendPhoto(this, file);
+            } else {
+                Utils.toast(this, R.string.error);
+            }
+        }else { // request read and write permission
+            Utils.requestPermission(this, storage_permission_code, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
 

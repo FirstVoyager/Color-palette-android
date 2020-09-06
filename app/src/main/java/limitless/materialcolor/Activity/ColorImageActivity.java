@@ -100,7 +100,7 @@ public class ColorImageActivity extends BaseActivity implements View.OnClickList
 
     private void copyCode(int s) {
         Utils.copyToClipboard(this, String.valueOf(s));
-        Utils.toast(this, String.valueOf(s) + " Copied");
+        Utils.toast(this, s + " Copied");
     }
 
     private void getGallery() {

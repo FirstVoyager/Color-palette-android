@@ -24,14 +24,14 @@ import limitless.materialcolor.Fragment.MaterialFragment;
 import limitless.materialcolor.Fragment.NewFragment;
 import limitless.materialcolor.Other.Utils;
 import limitless.materialcolor.R;
+import limitless.materialcolor.databinding.ActivityMainBinding;
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout;
 import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private BottomNavigationView bnv;
-    private DuoDrawerLayout drawer;
+    private ActivityMainBinding binding;
     private MaterialFragment materialFragment;
     private GradientFragment gradientFragment;
     private NewFragment newFragment;
@@ -41,11 +41,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         init();
         // load banner ads
-        AdView adView = findViewById(R.id.adView);
-        adView.loadAd(Utils.adRequest());
+        binding.content.adView.loadAd(Utils.adRequest());
         // load interstitial ads
         Utils.showStartInterstitialAd(this);
     }
@@ -55,10 +55,8 @@ public class MainActivity extends AppCompatActivity
         gradientFragment = new GradientFragment();
         newFragment = new NewFragment();
         favoriteFragment = new FavoriteFragment();
-        drawer =  findViewById(R.id.drawer_layout);
-        bnv = findViewById(R.id.bnv);
 
-        bnv.setOnNavigationItemSelectedListener(this);
+        binding.content.bnv.setOnNavigationItemSelectedListener(this);
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initToolbar();
@@ -69,17 +67,17 @@ public class MainActivity extends AppCompatActivity
     private void initToolbar() {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DuoDrawerToggle drawerToggle = new DuoDrawerToggle(this, drawer, toolbar,
+        DuoDrawerToggle drawerToggle = new DuoDrawerToggle(this, binding.drawerLayout, toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        drawer.setDrawerListener(drawerToggle);
+        binding.drawerLayout.setDrawerListener(drawerToggle);
         drawerToggle.syncState();
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        drawer.closeDrawer(GravityCompat.START);
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
         int id = item.getItemId();
         switch (id){
             case R.id.nav_from_image:

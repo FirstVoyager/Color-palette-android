@@ -7,9 +7,16 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 
 import androidx.annotation.IntegerRes;
@@ -18,6 +25,7 @@ import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -33,12 +41,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import limitless.materialcolor.Activity.SingleColorActivity;
 import limitless.materialcolor.BuildConfig;
 import limitless.materialcolor.Dialog.SelectColorBottomSheet;
 import limitless.materialcolor.Fragment.FavoriteFragment;
@@ -48,6 +62,7 @@ import limitless.materialcolor.R;
 
 public class Utils {
 
+    private static final int COLORDRAWABLE_DIMENSION = 2;
     private static Toast toast;
 
     /**
@@ -262,6 +277,11 @@ public class Utils {
         }
     }
 
+    /**
+     * Start activity
+     * @param context The Context object of your activity or application
+     * @param aClass Your activity want to start
+     */
     public static void startActivity(Context context, Class<?> aClass) {
         if (context == null || aClass == null)
             return;
@@ -339,4 +359,136 @@ public class Utils {
             error(e);
         }
     }
+
+    /**
+     * @param context The Context object of activity or application
+     * @param permission Your permission
+     * @return Permission granted or no
+     */
+    public static boolean checkPermission(Context context, String permission) {
+        if (context == null || permission == null)
+            return false;
+        return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /**
+     * Request for grant permission
+     * @param activity Your activity
+     * @param code Code for check result
+     * @param permissions Your permissions
+     */
+    public static void requestPermission(Activity activity, int code, String... permissions) {
+        ActivityCompat.requestPermissions(activity, permissions, code);
+    }
+
+    /**
+     * Convert color to bitmap
+     * @param color Color code
+     * @return Bitmap
+     */
+    public static Bitmap colorToBitmap(int color) {
+        return drawableToBitmap(new ColorDrawable(color));
+    }
+
+    /**
+     * Convert drawable to bitmap
+     * @param drawable Drawable
+     * @return Bitmap
+     */
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+//        if (drawable == null)
+//            return null;
+//        if (drawable instanceof BitmapDrawable) {
+//            ((BitmapDrawable) drawable).getBitmap();
+//        }
+//        // TODO: 9/6/20 fix height and width
+//        int width = drawable.getIntrinsicWidth();
+//        width = width > 0 ? width : 1;
+//        int height = drawable.getIntrinsicHeight();
+//        height = height > 0 ? height : 1;
+//
+//        Bitmap bitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+//        Canvas canvas = new Canvas(bitmap);
+//        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+//        drawable.draw(canvas);
+
+        if (drawable == null)
+            return null;
+        if (drawable instanceof BitmapDrawable)
+            return ((BitmapDrawable) drawable).getBitmap();
+        try {
+            int width = drawable.getIntrinsicWidth();
+            width = width > 0 ? width : 1;
+            int height = drawable.getIntrinsicHeight();
+            height = height > 0 ? height : 1;
+
+            Bitmap bitmap;
+            if (drawable instanceof ColorDrawable) {
+                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, Config.ARGB_8888);
+            } else {
+                bitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+            }
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (Exception e) {
+            error(e);
+            return null;
+        }
+    }
+
+    /**
+     * write bitmap to file in Pictures folder
+     * @param context The Context object of your activity or application
+     * @param bitmap Your bitmap
+     * @return The created image , if == null -> Error
+     */
+    @Nullable
+    public static File bitmapToFile(@Nullable Context context, @Nullable Bitmap bitmap) {
+        if (context == null || bitmap == null)
+            return null;
+        File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (file == null)
+            return null;
+        file = new File(file.getAbsolutePath() + "/" + Constant.pictures_folder_name);
+        if (! file.exists() && ! file.mkdirs())
+            return null; // Can't create folder
+        file = new File(file.getAbsolutePath() + "/" + UUID.randomUUID().toString() + ".png");
+        try {
+            if (! file.exists() && ! file.createNewFile())
+                return null; // Can't create folder
+        } catch (IOException e) {
+            error(e);
+            return null;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            return file;
+        } catch (FileNotFoundException e) {
+            error(e);
+            return null;
+        } catch (IOException e) {
+            error(e);
+            return null;
+        }
+    }
+
+    /**
+     * Send image file
+     * @param context The Context object of activity
+     * @param file Your image file
+     */
+    public static void sendPhoto(Context context, File file) {
+        if (context == null || file == null || ! file.exists())
+            return;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        intent.setType("image/*");
+        Utils.startActivity(context, intent);
+    }
+
 }
